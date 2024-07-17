@@ -1,0 +1,399 @@
+---
+title: 'DTSC 650: Data Analytics In R'
+subtitle: 'CodeGrade Final Project Part 2'
+output: html_notebook
+editor_options:
+  chunk_output_type: inline
+---
+
+## Student Info
+
+```         
+Name: Jaron Fairweather
+Term: Spring 1 2024
+Date: 2/20/2024
+```
+
+------------------------------------------------------------------------
+
+## General Instructions
+
+------------------------------------------------------------------------
+
+### Name of File
+
+Name your assignment file **`BRFSS_Part2`**. This is a quarto "markdown" file, which has the extension ".qmd".
+
+------------------------------------------------------------------------
+
+### Instructions
+
+For the final section, you will choose four variables to explore in ways we have not in Q1-Q9. You will choose one of those four variables as the response variable and the other three as predictors. Be sure to read through all of the instructions for Q10-Q14 before choosing your 4 variables. 
+
+We expect that you will choose 4 *different* variables than those covered in Part 1, Q1-9.
+
+Feel free to create multiple variables for Q12, Q13, and Q14, e.g. Q12a, Q12b, etc. Please make it clear, though, the distinction between each question/problem with comments, spacing, and new code chunks. If you use Q12a, b, etc., be sure to print the results by doing Q12a or print(Q12a). Your answers must be clearly identifiable. 
+
+Take time to tidy your code once you are finished. The easier it is for us to understand, the more partial credit you could receive.
+
+------------------------------------------------------------------------
+
+### Allowable packages
+
+Allowable packages are `tidyverse`, `caret`, `Hmisc`, `lsr`, `olsrr`, `psych`, `lm.beta`.
+
+-   If the allowable packages are not installed on your local computer, you'll need to do a one-time installation *from the Console Window in RStudio* for each package like this:
+
+    **`install.packages('<package name>')`**
+    
+    *Do not attempt to install packages in code that you submit to CodeGrade.*
+
+-   Note: installing the entire tidyverse with `install.packages('tidyverse')` from the Console Window will save you from having to install any of the tidyverse's individual packages in the future.
+
+-   In your code, load the package's library like this: **`library(<library name>)`**
+
+------------------------------------------------------------------------
+
+### Do / Do not
+
+-   Do use tidyverse functions (e.g., dplyr verbs) for all of the questions where possible.
+
+-   Do use The Pipe.
+
+-   Do use plenty of comments throughout your code chunks so that the grader can follow your line of thinking.
+
+-   Do use the "Q Discussion:" sections provided to explain your thinking and to answer the questions.
+
+-   Do not rearrange data frame outputs unless specified by the question instructions.
+
+-   Do not create multiple copies of the BRFSS dataset in your script. Creating too many copies of the dataset can cause CodeGrade to crash with *exit code -9*. If you see that error on your Practice Submission, please check for this.
+
+-   Do have integrity and submit your own work, not the work of a classmate, an online resource, or someone else.
+
+------------------------------------------------------------------------
+
+### Submission
+
+You only have ONE ATTEMPT to submit Part 2 to the ACTUAL submission link! On all the other assignments, you got multiple attempts; but not on this assignment. 
+
+Ensure you are ready and confident in your work before submitting.
+
+------------------------------------------------------------------------
+
+
+### Data Set
+
+-   These data come from [Kaggle](https://www.kaggle.com/cdc/behavioral-risk-factor-surveillance-system).
+
+-   To answer these questions you will need to use the codebook on Brightspace, called `codebook15_llcp.pdf`. Please note that not all of the variables listed in the codebook are included in the .csv file to be downloaded from Brightspace.
+
+-   Download the `BRFSS2015_650.csv` file from Brightspace and place it in the same folder/directory as your script file. Then in RStudio, set your Working Directory to your Source File location: in the menus choose Session, Set Working Directory, To Source File Location. You most likely will see some warnings after it loads due to the fact that `read_csv()` will try to guess the column type but because there are so many rows it won't read enough of them to accurately make a guess.
+
+-   You must use the `read_csv()` function when loading the .csv file. Do not use `read.csv()`.
+
+-   Do not rename the .csv file that you download from Brightspace.
+
+-   Do not edit the .csv file.
+
+------------------------------------------------------------------------
+
+### Pipe Notation
+
+You may use the `tidyverse` pipe **`%>%`** or the new base R pipe **`|>`**. For a comparison, see [here](https://www.tidyverse.org/blog/2023/04/base-vs-magrittr-pipe/).
+
+You are expected to use pipe notation in all of the CodeGrade assignments. Although there are alternate ways to filter, subset, and summarize data sets, using the pipe creates more readable code and is an important skill to develop.
+
+------------------------------------------------------------------------
+
+### Comments vs. Discussion
+
+You should include both comments within your code chunk as well a discussion after each coded answer. Comments explain your code and your thought process; the discussion uses your code to answer the questions we've asked. We have provided "Q Discussion" sections for each question. Feel free to add more lines in the discussion section. 
+
+You can also use markdown headers to organize your discussion and the outline. For more info on markdown, see [here](https://rmarkdown.rstudio.com/authoring_basics.html)
+
+
+------------------------------------------------------------------------
+
+## Questions and Coded Solutions
+
+------------------------------------------------------------------------
+
+### Preliminaries
+
+```{r}
+### It's always a good idea when working in RStudio to start with a clean environment. 
+
+### Clear objects from the environment memory that may be leftover from previous versions of your code or other assignments by running the following line:
+rm(list = ls())
+
+### Load the libraries you need
+
+library(tidyverse) 
+
+
+
+
+
+### Load the Data
+### Load the data file
+### Do not change this line
+brf <- read_csv("BRFSS2015_650.csv")
+
+```
+
+------------------------------------------------------------------------
+
+## Questions
+
+------------------------------------------------------------------------
+
+### Q10
+
+Address the values of each of the variables (use the codebook for this and include your answer as comments). For instance, is "none" equal to a value other than 0? Are there extra decimals implied? Are there other values that should be excluded based on the responses they represent? Which variable will you seek to predict from the other variables? Answer these questions in the *Q10 Discussion:* section below the code chunk. Update the dataset to account for these values for the remainder of the questions in this part.
+
+```{r}
+### Do not edit the following line. It is used by CodeGrade.
+# CG Q10 # 
+
+### TYPE YOUR CODE BELOW ###
+
+sclt_v <- brf |>
+            select(SMOKE100, ADANXEV, MISTMNT, ADDEPEV2) |>
+            drop_na() |>
+            as.data.frame()
+#made a new data frame based off slected data, since we need all of data
+#used drop_na() as we cant make acuate predictions unless we have the paitents that awnserd all 4 questions
+
+sclt_v
+
+
+```
+
+### Q10 Discussion:
+Your Q10 discussion goes here. Feel free to add more lines as needed.
+ 
+ MY Varibles(smoke100 ~, adanxev, mistmnt, addepev2)
+ Deciding if someone has smoked in through life, based on bieng diagnosed with anxiety, if your recieving treatment for a mental condition and  if you have depresive disorder
+ 
+ - none or NA represnts not asked or missing which is a value other than 0. A value of 0 would be given by the paitent.
+ 
+- No extra decimals implied by any of the varibles., and no values that should be excluded based off the data varibles.
+  
+
+
+
+
+### Q11
+
+Remove any outliers for each applicable variable. Make sure you are updating the dataset from Q10 and using this dataset for the remainder of the questions. Briefly explain why you chose the method you used in the *Q11 Discussion* section. Within your code chunk, provide comments explaining what your code is doing.
+
+```{r}
+### Do not edit the following line. It is used by CodeGrade.
+# CG Q11 # 
+
+### TYPE YOUR CODE BELOW ###
+
+#In this first part of my code i am creating box plot to see if the varibles needs to have any outliers removed
+
+bplot_1 <- sclt_v |>
+            ggplot(aes(x = SMOKE100)) +
+            geom_boxplot()
+#smoke 100 has 2 high outliers
+
+bplot_2 <- sclt_v |>
+            ggplot(aes(x = ADANXEV)) +
+            geom_boxplot()
+#Adanxev has 2 high outliers and 1 low outlier
+
+bplot_3 <- sclt_v |>
+            ggplot(aes(x = MISTMNT)) +
+            geom_boxplot()
+#MISTMNT has 2 high outliers and 1 low outlier
+
+bplot_4 <- sclt_v |>
+            ggplot(aes(x = ADDEPEV2)) +
+            geom_boxplot()
+#ADDEPEV has 2 high outliers and 1 low outlier
+
+
+bplot_1
+bplot_2
+bplot_3
+bplot_4
+
+
+#in this part we remove the outlers for each varible
+
+up_1 <- quantile(sclt_v$SMOKE100, 0.75, na.rm = TRUE) + (1.5 * IQR(sclt_v$SMOKE100, na.rm = TRUE))
+
+lw_1 <- quantile(sclt_v$SMOKE100, 0.25, na.rm = TRUE) - (1.5 * IQR(sclt_v$SMOKE100, na.rm = TRUE))
+# for the varible smoke100 and the ones below we are slecting our outliers before filtering
+
+
+up_2 <- quantile(sclt_v$ADANXEV, 0.75, na.rm = TRUE) + (1.5 * IQR(sclt_v$ADANXEV, na.rm = TRUE))
+
+lw_2 <- quantile(sclt_v$ADANXEV, 0.25, na.rm = TRUE) - (1.5 * IQR(sclt_v$ADANXEV, na.rm = TRUE))
+# for the varible adanxev
+
+
+up_3 <- quantile(sclt_v$MISTMNT, 0.75, na.rm = TRUE) + (1.5 * IQR(sclt_v$MISTMNT, na.rm = TRUE))
+
+lw_3 <- quantile(sclt_v$MISTMNT, 0.25, na.rm = TRUE) - (1.5 * IQR(sclt_v$MISTMNT, na.rm = TRUE))
+# for the varible mistmnt
+
+
+
+up_4 <- quantile(sclt_v$ADDEPEV2, 0.75, na.rm = TRUE) + (1.5 * IQR(sclt_v$ADDEPEV2, na.rm = TRUE))
+
+lw_4 <- quantile(sclt_v$ADDEPEV2, 0.25, na.rm = TRUE) - (1.5 * IQR(sclt_v$ADDEPEV2, na.rm = TRUE))
+# for the varible addepev2
+
+
+
+# here is where we filter out the outliers
+no_out <- sclt_v |>
+                filter(
+                  SMOKE100 <= up_1,
+                  SMOKE100 >= lw_1,
+                  
+                  ADANXEV <= up_2,
+                  ADANXEV >= lw_2,
+                  
+                  MISTMNT <= up_3,
+                  MISTMNT >= lw_3,
+                  
+                  ADDEPEV2 <= up_4,
+                  ADDEPEV2 >= lw_4,
+               )
+
+
+no_out
+sclt_v
+
+ 
+```
+
+### Q11 Discussion:
+Your Q11 discussion goes here. Feel free to add more lines as needed.
+
+
+For this case in terms of my data, i should not remove the outliers, I still did it to show that i am capable of doing it, but since my data varibles have few choices or values, and few outliers, leaving my data as is will brodaen my data to more people, intsead of having it specific to a specific type of person.
+
+
+
+
+### Q12
+
+Complete exploratory analyses (for each variable) doing appropriate visualizations with ggplot2. Include visualizations that incorporate a combination of your variables within one plot. Provide an organized discussion of your observations for each of the plots in the *Q12 Discussion* section below.
+
+```{r}
+### Do not edit the following line. It is used by CodeGrade.
+# CG Q12 # 
+
+### TYPE YOUR CODE BELOW ###
+ # because smoke 100 is my response varible, i will see the relationship of each varible to it with visualations
+
+# i downloaded the corrgram package to get a corragram that could show the correlation relationship between all my data. Which was shown in a class video. the light blue in the graph shows the lack of correlation, if there was correlation the graph would have red squares.
+viz <- corrgram(sclt_v)
+# the corrgram shows that there was not a correlation at all between any of the varibles which i did not expect when i choose them, but when i get do the cor test with each varible it the correlation was under 10%
+Q12A <- cor.test(sclt_v$SMOKE100, sclt_v$ADANXEV)
+Q12B <- cor.test(sclt_v$SMOKE100, sclt_v$MISTMNT)
+Q12C <- cor.test(sclt_v$SMOKE100, sclt_v$ADDEPEV2)
+
+viz
+Q12A
+Q12B
+Q12C
+
+
+```
+
+### Q12 Discussion:
+Your Q12 discussion goes here. Feel free to add more lines as needed.
+
+As i said in the comments above there was no correlation in the varibles above shown with the corregram function. And this was proven with the cor.test() function
+
+ because smoke 100 is my response varible, i will see the relationship of each varible to it with visualations
+
+i downloaded the corrgram package to get a corragram that could show the correlation relationship between all my data. Which was shown in a class video. the light blue in the graph shows the lack of correlation, if there was correlation the graph would have red squares.
+
+the corrgram shows that there was not a correlation at all between any of the varibles which i did not expect when i choose them, but when i get do the cor test with each varible it the correlation was under 10%
+
+
+
+### Q13
+
+Run all of the appropriate basic descriptive statistics for each of your variables.  What do these statistics reveal? Be sure to address each variable in the "Q13 Discussion" below.
+
+```{r}
+### Do not edit the following line. It is used by CodeGrade.
+# CG Q13 # 
+
+### TYPE YOUR CODE BELOW ###
+
+
+summ <- summary(sclt_v)
+
+summ
+
+
+```
+
+### Q13 Discussion:
+Your Q13 discussion goes here. Feel free to add more lines as needed.
+
+The descriptive statistics are a respresention of how my data values were. 
+Each one of my values hade one 4 choices for values, either1, 2, 7 or 9. and due to this the descriptive statistics are very similar. if my data had more values the statistices would vary much diffrently.
+
+
+
+
+
+
+### Q14
+
+Finally, run at least 2 different, appropriate regressions predicting the variable you indicated in Q10. These regressions should use different predictor(s). Organize and explain your code within the code chunk using comments. Identify the best model and provide a discussion of your observations in the *Q14 Discussion* section provided below. Be organized and detailed in your discussion.
+
+```{r}
+### Do not edit the following line. It is used by CodeGrade.
+# CG Q14 # 
+
+### TYPE YOUR CODE BELOW ###
+
+# predicting if someone has smoked at least 100 cigarets in their life based on if they were told they have depressive order and if they have been diagnosed with anxiety disorder
+reg_1 <- lm(SMOKE100 ~ ADDEPEV2 + ADANXEV, data = sclt_v)
+reg_1
+
+
+#predicting if someone has smoked at least 100 cigarets in their life based onif they are recieving treatment for a mental problem.
+reg_2 <- lm(SMOKE100 ~ MISTMNT, data = sclt_v)
+reg_2
+
+
+
+```
+
+### Q14 Discussion:
+Your Q14 discussion goes here. Feel free to add more lines as needed.
+
+
+The best model is the first one as there are more predictors.
+
+
+
+
+
+
+------------------------------------------------------------------------
+
+# Before submitting to Code Grade:
+
+1)  Clear objects from your environment. Click the broom in the Environment pane in the top right. This will erase any variables (like Q1, Q2) that you've stored.
+
+2)  Rerun all your code. You can click the "Run" option above in this script pane (top right of notebook), then select "Run all". You should have all the variables stored again in the environment pane, and you should see no red error messages in the console below.
+
+3)  **Important**: You only have ONE ATTEMPT to submit Part 2 to the ACTUAL submission link! Ensure you are ready and confident in your work before submitting.
+
+4)  Reread all the directions and questions and make sure you addressed each part carefully, clearly, and thoughtfully.
+
+------------------------------------------------------------------------
